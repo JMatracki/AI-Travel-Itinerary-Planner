@@ -1,4 +1,4 @@
-# 🧳 Travel Itinerary Planner (English)
+# 🧳 AI Travel Itinerary Planner (English)
 
 
 ## 📝 Project Description
@@ -59,7 +59,7 @@ This project is licensed under the MIT License.
 
 Created by: [JMatracki](https://github.com/jmatracki)
 
-# 🧳 Generator Planu Podróży (Polski)
+# 🧳 AI Generator Planu Podróży (Polski)
 
 ## 📝 Opis projektu
 
