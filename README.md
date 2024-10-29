@@ -1,9 +1,9 @@
 ## 🌍 Languages
-- [English](#english)
-- [Polski](#polish)
+- [English](#travel-itinerary-planner)
+- [Polski](#generator-planu-podróży)
 
 ---
-# 🧳 Travel Itinerary Planner {#english}
+# 🧳 Travel Itinerary Planner {#travel-itinerary-planner}
 
 
 ## 📝 Project Description
@@ -64,7 +64,7 @@ This project is licensed under the MIT License.
 
 Created by: [JMatracki](https://github.com/jmatracki)
 
-# 🧳 Generator Planu Podróży {#polski}
+# 🧳 Generator Planu Podróży {#generator-planu-podróży}
 
 ## 📝 Opis projektu
 
