@@ -47,8 +47,9 @@ The project is built using:
 - If you want to test application using playwright, first you need to add API keys to your .env file in tests folder. 
 5. **Testing application**:
 - When you added API keys as in step before, then you can type:
- ```bash
+   ```bash
    npx playwright test
+
 ![Zrzut ekranu 2025-03-12 193950](https://github.com/user-attachments/assets/ec7fcdb1-27b3-48fd-be16-b44584b42d75)
 
 
@@ -130,8 +131,9 @@ Projekt zbudowany w oparciu o:
 - Jeśli chcesz testować aplikację za pomocą Playwrighta, najpierw musisz dodać klucze API do pliku .env w folderze z testami.
 5. **Testowanie aplikacji**:
 - Po dodaniu kluczy API, jak opisano w poprzednim kroku, możesz wpisać:
- ```bash
+   ```bash
    npx playwright test
+
 ![Zrzut ekranu 2025-03-12 193950](https://github.com/user-attachments/assets/ec7fcdb1-27b3-48fd-be16-b44584b42d75)
 
 ## 📸 Podgląd
