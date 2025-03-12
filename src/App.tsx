@@ -159,11 +159,16 @@ const App: React.FC = () => {
         <div className="flex gap-4 items-center">
           <button
             onClick={toggleDarkMode}
+            aria-label="Toggle Dark Mode"
             className="py-2 px-4 bg-gray-700 text-white rounded hover:bg-gray-600 transition duration-200 dark:bg-white dark:text-gray-900"
           >
             {darkMode ? t.toggleLightMode : t.toggleDarkMode}
           </button>
-          <button onClick={toggleLanguage} className="w-8 h-8">
+          <button
+            onClick={toggleLanguage}
+            className="w-8 h-8"
+            aria-label={language === "en" ? "Polski" : "English"}
+          >
             <img
               src={language === "en" ? PLFlag : UKFlag}
               alt="Toggle Language"
@@ -171,6 +176,7 @@ const App: React.FC = () => {
           </button>
           <button
             onClick={() => setApiKeyModalOpen(true)}
+            aria-label="Settings"
             className={`w-[24px] h-[24px] ${darkMode && "bg-white"}`}
           >
             <img src={settingsIcon} alt="API Key settings" />

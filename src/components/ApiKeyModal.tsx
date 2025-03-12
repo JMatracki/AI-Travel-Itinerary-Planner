@@ -46,6 +46,7 @@ const ApiKeyModal: React.FC<ApiKeyModalProps> = ({
           </label>
           <input
             type="text"
+            aria-label="OpenAi Key Input"
             value={openAiKey}
             onChange={(e) => setOpenAiKey(e.target.value)}
             className="border p-2 w-full dark:bg-gray-700 dark:border-gray-600 dark:text-white"
@@ -57,6 +58,7 @@ const ApiKeyModal: React.FC<ApiKeyModalProps> = ({
           </label>
           <input
             type="text"
+            aria-label="Unsplash Access Key Input"
             value={unsplashKey}
             onChange={(e) => setUnsplashKey(e.target.value)}
             className="border p-2 w-full dark:bg-gray-700 dark:border-gray-600 dark:text-white"
@@ -65,6 +67,7 @@ const ApiKeyModal: React.FC<ApiKeyModalProps> = ({
         <div className="flex justify-end">
           <button
             onClick={handleSave}
+            aria-label="Save Settings"
             className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-600"
           >
             {saveLabel}

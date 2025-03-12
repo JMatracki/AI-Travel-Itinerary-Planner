@@ -52,6 +52,7 @@ const SavedItineraries: React.FC<SavedItinerariesProps> = ({
             <div className="flex justify-between">
               <button
                 onClick={() => onExport(content)}
+                aria-label="Export to PDF"
                 className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-200 w-full mr-2"
               >
                 {exportButtonLabel}

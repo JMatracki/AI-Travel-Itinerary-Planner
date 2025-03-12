@@ -1,5 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { translations } from "../translations/translations";
+import { tripSchema, TripFormData } from "../schemas/tripSchema";
 
 interface TripFormProps {
   onGenerateItinerary: (
@@ -16,92 +19,109 @@ const TripForm: React.FC<TripFormProps> = ({
   language,
   loading,
 }) => {
-  const [destination, setDestination] = useState("");
-  const [days, setDays] = useState<number>(1);
-  const [activities, setActivities] = useState("");
-  const [error, setError] = useState<string | null>(null);
-
   const t = translations[language];
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!destination) {
-      setError(t.destinationError);
-      return;
-    }
-    if (days <= 0) {
-      setError(t.daysError);
-      return;
-    }
-    if (!activities) {
-      setError(t.activitiesError);
-      return;
-    }
+  const {
+    handleSubmit,
+    register,
+    setValue,
+    formState: { errors },
+    setError,
+  } = useForm<TripFormData>({
+    resolver: zodResolver(tripSchema(t)),
+  });
 
-    setError(null);
-    onGenerateItinerary(destination, days, activities);
-    setDestination("");
-    setActivities("");
+  const [destination, setDestination] = useState("");
+  const [days, setDays] = useState(1);
+  const [activities, setActivities] = useState("");
+
+  const setDynamicErrors = useCallback(() => {
+    Object.keys(errors).forEach((key) => {
+      if (errors[key as keyof TripFormData]) {
+        setError(key as keyof TripFormData, {
+          message: errors[key as keyof TripFormData]?.message,
+        });
+      }
+    });
+  }, [errors, setError]);
+
+  useEffect(() => {
+    setDynamicErrors();
+  }, [language, errors, setError, t, setDynamicErrors]);
+
+  useEffect(() => {
+    setValue("destination", destination);
+    setValue("days", days);
+    setValue("activities", activities);
+  }, [language, destination, days, activities, setValue]);
+
+  const onSubmit = (data: TripFormData) => {
+    onGenerateItinerary(data.destination, data.days, data.activities);
+  };
+
+  const handleDaysChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Number(e.target.value);
+    setDays(value);
+    setValue("days", value);
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-8 mb-4 w-full max-w-md transition duration-300 mx-auto"
-    >
+    <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-lg">
       <div className="mb-4">
-        <label
-          htmlFor="destination"
-          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
-        >
+        <label htmlFor="destination" className="block text-lg font-medium">
           {t.destinationLabel}
         </label>
         <input
-          type="text"
+          {...register("destination")}
           id="destination"
           value={destination}
           onChange={(e) => setDestination(e.target.value)}
-          required
-          className="border border-gray-300 dark:border-gray-600 rounded-md p-2 w-full bg-white dark:bg-gray-700 text-black dark:text-white"
+          className="w-full px-4 py-2 mt-1 border border-gray-300 rounded-lg"
+          disabled={loading}
         />
+        {errors.destination && (
+          <p className="text-red-500 text-sm">{errors.destination.message}</p>
+        )}
       </div>
+
       <div className="mb-4">
-        <label
-          htmlFor="days"
-          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
-        >
+        <label htmlFor="days" className="block text-lg font-medium">
           {t.daysLabel}
         </label>
         <input
           type="number"
+          {...register("days")}
           id="days"
           value={days}
-          onChange={(e) => setDays(Number(e.target.value))}
-          min="1"
-          required
-          className="border border-gray-300 dark:border-gray-600 rounded-md p-2 w-full bg-white dark:bg-gray-700 text-black dark:text-white"
+          onChange={handleDaysChange}
+          className="w-full px-4 py-2 mt-1 border border-gray-300 rounded-lg"
+          disabled={loading}
         />
+        {errors.days && (
+          <p className="text-red-500 text-sm">{errors.days.message}</p>
+        )}
       </div>
+
       <div className="mb-4">
-        <label
-          htmlFor="activities"
-          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
-        >
+        <label htmlFor="activities" className="block text-lg font-medium">
           {t.activitiesLabel}
         </label>
-        <input
-          type="text"
+        <textarea
+          {...register("activities")}
           id="activities"
           value={activities}
           onChange={(e) => setActivities(e.target.value)}
-          required
-          className="border border-gray-300 dark:border-gray-600 rounded-md p-2 w-full bg-white dark:bg-gray-700 text-black dark:text-white"
+          className="w-full px-4 py-2 mt-1 border border-gray-300 rounded-lg"
+          disabled={loading}
         />
+        {errors.activities && (
+          <p className="text-red-500 text-sm">{errors.activities.message}</p>
+        )}
       </div>
-      {error && <div className="text-red-600 mb-4">{error}</div>}
+
       <button
         type="submit"
-        className="mt-4 bg-blue-500 text-white rounded-md py-2 px-4 hover:bg-blue-600 transition duration-200"
+        className="w-full py-2 mt-4 bg-blue-600 text-white font-semibold rounded-lg disabled:opacity-50"
         disabled={loading}
       >
         {loading ? t.loadingText : t.generateButton}
