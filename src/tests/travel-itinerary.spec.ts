@@ -22,7 +22,7 @@ test.beforeEach(async ({ page }) => {
     .fill(process.env.OPENAI_API_KEY);
   await page
     .locator('input[aria-label="Unsplash Access Key Input"]')
-    .fill(process.env.OPENAI_API_KEY);
+    .fill(process.env.UNSPLASH_ACCESS_KEY);
   await page.locator('button[aria-label="Save Settings"]').click();
 });
 
